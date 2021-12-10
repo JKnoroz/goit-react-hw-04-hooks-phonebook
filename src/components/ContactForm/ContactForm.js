@@ -1,5 +1,6 @@
 import { useState } from 'react';
 // import PropTypes from "prop-types";
+import shortid from 'shortid';
 import s from './ContactForm.module.css';
 
 function ContactForm({ onSubmit }) {
@@ -33,12 +34,13 @@ function ContactForm({ onSubmit }) {
     e.preventDefault();
     const name = e.currentTarget.name.value;
     const number = e.currentTarget.number.value;
-    onSubmit({ name, number });
+    const id = shortid.generate();
+    onSubmit({ name, number, id });
     reset();
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit()}>
       <label className={s.label}>
         Name:
         <input
