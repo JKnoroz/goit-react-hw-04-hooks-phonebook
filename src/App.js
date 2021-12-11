@@ -5,7 +5,6 @@ import ContactList from './components/ContactList/ContactList';
 import Filter from './components/Filter/Filter';
 
 import './App.css';
-// import shortid from 'shortid';
 
 function App() {
   const [contacts, setContacts] = useState(() => {
