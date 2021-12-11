@@ -40,7 +40,7 @@ function ContactForm({ onSubmit }) {
   }
 
   return (
-    <form onSubmit={handleSubmit()}>
+    <form onSubmit={handleSubmit}>
       <label className={s.label}>
         Name:
         <input

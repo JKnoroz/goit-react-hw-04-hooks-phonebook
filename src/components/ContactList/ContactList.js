@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 // import PropTypes from "prop-types";
-import s from "./ContactList.module.css";
+import s from './ContactList.module.css';
 
-const ContactList = ({ contacts, onDeleteContact }) => (
+function ContactList({ contacts, onDeleteContact }) {
   <ul className={s.list}>
     {contacts.map(({ id, name, number }) => (
       <li key={id}>
@@ -12,7 +12,7 @@ const ContactList = ({ contacts, onDeleteContact }) => (
         </button>
       </li>
     ))}
-  </ul>
-);
+  </ul>;
+}
 
 export default ContactList;
