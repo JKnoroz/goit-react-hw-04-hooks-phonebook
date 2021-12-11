@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
@@ -14,12 +14,17 @@ function App() {
 
   const [filter, setFilter] = useState('');
 
-  // function formSubmitHandler(data) {
-  //   console.log(data);
-  // }
+  useEffect(() => {
+    window.localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
+
+  const visibleContacts = useMemo(() => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase()),
+    );
+  }, [contacts, filter]);
 
   function addContact(contact) {
-    console.log(contact);
     const contactIsInList = contacts.find(
       el => el.name.toLowerCase() === contact.name.toLowerCase(),
     );
@@ -36,35 +41,10 @@ function App() {
     setFilter(e.currentTarget.value);
   }
 
-  const getVisibleContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter),
-    );
-  };
-
   function deleteContact(contactId) {
     setContacts(contacts.filter(contact => contact.id !== contactId));
   }
 
-  // componentDidMount() {
-  //   const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
-  //   if (parsedContacts) {
-  //     this.setState({ contacts: parsedContacts });
-  //   }
-  // }
-
-  useEffect(() => {
-    window.localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (this.state.contacts !== prevState.contacts) {
-  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  //   }
-  // }
-
-  // const visibleContacts = this.getVisibleContacts();
   return (
     <div className="App">
       <div>
@@ -74,7 +54,7 @@ function App() {
         <h2>Contacts</h2>
         <Filter value={filter} onChange={changeFilter} />
         <ContactList
-          contacts={getVisibleContacts()}
+          contacts={visibleContacts}
           onDeleteContact={deleteContact}
         />
       </div>
